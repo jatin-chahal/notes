@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Jatin</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      margin-top: 50px;
+    }
+    .hidden {
+      display: none;
+    }
+    textarea {
+      width: 80%;
+      height: 300px;
+      margin-top: 20px;
+    }
+    button {
+      padding: 10px 20px;
+      margin-top: 10px;
+    }
+  </style>
+</head>
+<body>
+  <!-- Title Section -->
+  <h1>
+    <span id="j">J</span>
+    <span id="a">a</span>
+    <span id="t">t</span>
+    <span id="i">i</span>
+    <span id="n">n</span>
+  </h1>
+
+  <!-- Password Section -->
+  <div id="passwordSection" class="hidden">
+    <h2>Enter Password</h2>
+    <input type="password" id="password" placeholder="Enter password">
+    <button onclick="validatePassword()">Submit</button>
+    <button onclick="showForgotPassword()">Forgot Password</button>
+    <button onclick="showGames()">Games</button>
+    <p id="error" style="color: red;"></p>
+  </div>
+
+  <!-- Notes Section -->
+  <div id="notesSection" class="hidden">
+    <h2>Your Notes</h2>
+    <textarea id="notes" placeholder="Write something..."></textarea>
+    <br>
+    <button onclick="saveNotes()">Save</button>
+    <button onclick="logout()">Logout</button>
+    <button onclick="showChangePassword()">Change Password</button>
+    <p id="savedMessage" style="color: green;"></p>
+  </div>
+
+  <!-- Forgot Password Section -->
+  <div id="forgotPasswordSection" class="hidden">
+    <h2>Forgot Password</h2>
+    <p>Hint: <span id="hintText"></span></p>
+    <input type="text" id="hintAnswer" placeholder="Enter hint answer">
+    <button onclick="resetPassword()">Reset Password</button>
+    <button onclick="backToPassword()">Back</button>
+    <p id="forgotError" style="color: red;"></p>
+  </div>
+
+  <!-- Change Password Section -->
+  <div id="changePasswordSection" class="hidden">
+    <h2>Change Password</h2>
+    <input type="password" id="newPassword" placeholder="Enter new password">
+    <input type="text" id="newHint" placeholder="Enter hint for password recovery">
+    <button onclick="saveNewPassword()">Save</button>
+    <button onclick="backToNotes()">Back</button>
+    <p id="changePasswordError" style="color: red;"></p>
+    <p id="changePasswordSuccess" style="color: green;"></p>
+  </div>
+
+  <!-- Games Section -->
+  <div id="gamesSection" class="hidden">
+    <h2>Guess the Number</h2>
+    <p>Try to guess the number between 1 and 100.</p>
+    <input type="number" id="guessInput" placeholder="Enter your guess">
+    <button onclick="guessNumber()">Submit</button>
+    <button onclick="backToPassword()">Back</button>
+    <p id="gameMessage" style="color: blue;"></p>
+  </div>
+
+  <script>
+    const title = document.querySelectorAll("h1 span");
+    let currentIndex = 0;
+    let incorrectAttempts = 0;
+
+    // Load stored password and hint
+    let storedPassword = localStorage.getItem("password") || "jatin";
+    let storedHint = localStorage.getItem("hint") || "default hint";
+
+    // Guess the Number Game Variables
+    let randomNumber = Math.floor(Math.random() * 100) + 1;
+
+    // Handle clicking letters in sequence
+    title.forEach((letter, index) => {
+      letter.addEventListener("click", () => {
+        if (index === currentIndex) {
+          currentIndex++;
+          if (currentIndex === title.length) {
+            document.getElementById("passwordSection").classList.remove("hidden");
+          }
+        } else {
+          alert("Click the letters in order!");
+          currentIndex = 0;
+        }
+      });
+    });
+
+    // Validate password
+    function validatePassword() {
+      const password = document.getElementById("password").value;
+      if (password === storedPassword) {
+        document.getElementById("passwordSection").classList.add("hidden");
+        document.getElementById("notesSection").classList.remove("hidden");
+        document.getElementById("notes").value = localStorage.getItem("notes") || "";
+        incorrectAttempts = 0;
+      } else {
+        incorrectAttempts++;
+        document.getElementById("error").textContent = "Incorrect password!";
+        if (incorrectAttempts >= 10) {
+          localStorage.clear();
+          alert("Too many incorrect attempts. All data has been deleted.");
+          location.reload();
+        }
+      }
+    }
+
+    // Save notes
+    function saveNotes() {
+      const notes = document.getElementById("notes").value;
+      localStorage.setItem("notes", notes);
+      document.getElementById("savedMessage").textContent = "Notes saved!";
+      setTimeout(() => {
+        document.getElementById("savedMessage").textContent = "";
+      }, 2000);
+    }
+
+    // Logout
+    function logout() {
+      document.getElementById("notesSection").classList.add("hidden");
+      document.getElementById("passwordSection").classList.remove("hidden");
+      document.getElementById("password").value = "";
+      currentIndex = 0;
+    }
+
+    // Show forgot password section
+    function showForgotPassword() {
+      document.getElementById("passwordSection").classList.add("hidden");
+      document.getElementById("forgotPasswordSection").classList.remove("hidden");
+      document.getElementById("hintText").textContent = storedHint;
+    }
+
+    // Reset password
+    function resetPassword() {
+      const hintAnswer = document.getElementById("hintAnswer").value;
+      if (hintAnswer === storedHint) {
+        storedPassword = "jatin";
+        localStorage.setItem("password", storedPassword);
+        document.getElementById("forgotError").textContent = "";
+        alert("Password reset to default (jatin).");
+        backToPassword();
+      } else {
+        document.getElementById("forgotError").textContent = "Incorrect hint answer!";
+      }
+    }
+
+    // Show change password section
+    function showChangePassword() {
+      document.getElementById("notesSection").classList.add("hidden");
+      document.getElementById("changePasswordSection").classList.remove("hidden");
+    }
+
+    // Save new password
+    function saveNewPassword() {
+      const newPassword = document.getElementById("newPassword").value;
+      const newHint = document.getElementById("newHint").value;
+      if (newPassword && newHint) {
+        storedPassword = newPassword;
+        storedHint = newHint;
+        localStorage.setItem("password", newPassword);
+        localStorage.setItem("hint", newHint);
+        document.getElementById("changePasswordError").textContent = "";
+        document.getElementById("changePasswordSuccess").textContent = "Password changed successfully!";
+        setTimeout(() => {
+          backToNotes();
+        }, 2000);
+      } else {
+        document.getElementById("changePasswordError").textContent = "Please fill in all fields!";
+      }
+    }
+
+    // Back to password section
+    function backToPassword() {
+      document.getElementById("forgotPasswordSection").classList.add("hidden");
+      document.getElementById("gamesSection").classList.add("hidden");
+      document.getElementById("passwordSection").classList.remove("hidden");
+      document.getElementById("hintAnswer").value = "";
+    }
+
+    // Back to notes section
+    function backToNotes() {
+      document.getElementById("changePasswordSection").classList.add("hidden");
+      document.getElementById("notesSection").classList.remove("hidden");
+      document.getElementById("newPassword").value = "";
+      document.getElementById("newHint").value = "";
+      document.getElementById("changePasswordSuccess").textContent = "";
+    }
+
+    // Show games section
+    function showGames() {
+      document.getElementById("passwordSection").classList.add("hidden");
+      document.getElementById("gamesSection").classList.remove("hidden");
+    }
+
+    // Guess the number game
+    function guessNumber() {
+      const guess = parseInt(document.getElementById("guessInput").value);
+      if (guess < randomNumber) {
+        document.getElementById("gameMessage").textContent = "Too low! Try again.";
+      } else if (guess > randomNumber) {
+        document.getElementById("gameMessage").textContent = "Too high! Try again.";
+      } else {
+        document.getElementById("gameMessage").textContent = "Congratulations! You guessed it!";
+        randomNumber = Math.floor(Math.random() * 100) + 1; // Reset the game
+      }
+    }
+  </script>
+</body>
+</html>
