@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Jatin</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      margin-top: 50px;
+    }
+    .hidden {
+      display: none;
+    }
+    textarea {
+      width: 80%;
+      height: 300px;
+      margin-top: 20px;
+    }
+    button {
+      padding: 10px 20px;
+      margin-top: 10px;
+    }
+    input[type="file"] {
+      margin-top: 10px;
+    }
+  </style>
+</head>
+<body>
+  <!-- Title Section -->
+  <h1>
+    <span id="j">J</span>
+    <span id="a">a</span>
+    <span id="t">t</span>
+    <span id="i">i</span>
+    <span id="n">n</span>
+  </h1>
+
+  <!-- Password Section -->
+  <div id="passwordSection" class="hidden">
+    <h2>Enter Password</h2>
+    <input type="password" id="password" placeholder="Enter password">
+    <button onclick="validatePassword()">Submit</button>
+    <p id="error" style="color: red;"></p>
+  </div>
+
+  <!-- Notes Section -->
+  <div id="notesSection" class="hidden">
+    <h2>Your Notes</h2>
+    <textarea id="notes" placeholder="Write something..."></textarea>
+    <br>
+    <button onclick="saveNotes()">Save</button>
+    <button onclick="logout()">Logout</button>
+    <p id="savedMessage" style="color: green;"></p>
+    <!-- Video Upload Section -->
+    <input type="file" id="videoUpload" accept="video/*">
+    <br>
+    <video id="videoPreview" controls style="display: none; margin-top: 20px;"></video>
+    <!-- Camera Photo Section -->
+    <input type="file" id="photoCapture" accept="image/*" capture="camera">
+    <br>
+    <img id="photoPreview" style="display: none; margin-top: 20px;" width="300" />
+  </div>
+
+  <script>
+    const title = document.querySelectorAll("h1 span");
+    let currentIndex = 0;
+    let passwordStore = {};
+
+    // Handle clicking letters in sequence
+    title.forEach((letter, index) => {
+      letter.addEventListener("click", () => {
+        if (index === currentIndex) {
+          currentIndex++;
+          if (currentIndex === title.length) {
+            document.getElementById("passwordSection").classList.remove("hidden");
+          }
+        } else {
+          alert("Click the letters in order!");
+          currentIndex = 0;
+        }
+      });
+    });
+
+    // Validate password and store custom password
+    function validatePassword() {
+      const password = document.getElementById("password").value;
+      if (password.startsWith("/") && !isNaN(password.slice(1))) {
+        // This is a new password format: /number
+        passwordStore[password] = passwordStore[password] || '';
+        localStorage.setItem('passwordStore', JSON.stringify(passwordStore));
+        document.getElementById("passwordSection").classList.add("hidden");
+        document.getElementById("notesSection").classList.remove("hidden");
+        document.getElementById("notes").value = passwordStore[password];
+      } else if (password === "jatin") {
+        document.getElementById("passwordSection").classList.add("hidden");
+        document.getElementById("notesSection").classList.remove("hidden");
+        document.getElementById("notes").value = localStorage.getItem("notes") || "";
+      } else {
+        document.getElementById("error").textContent = "Incorrect password!";
+      }
+    }
+
+    // Save notes
+    function saveNotes() {
+      const notes = document.getElementById("notes").value;
+      const password = document.getElementById("password").value;
+      if (password.startsWith("/") && !isNaN(password.slice(1))) {
+        passwordStore[password] = notes;
+        localStorage.setItem('passwordStore', JSON.stringify(passwordStore));
+      } else {
+        localStorage.setItem("notes", notes);
+      }
+      document.getElementById("savedMessage").textContent = "Notes saved!";
+      setTimeout(() => {
+        document.getElementById("savedMessage").textContent = "";
+      }, 2000);
+    }
+
+    // Logout
+    function logout() {
+      document.getElementById("notesSection").classList.add("hidden");
+      document.getElementById("passwordSection").classList.remove("hidden");
+      document.getElementById("password").value = "";
+      currentIndex = 0;
+    }
+
+    // Handle video upload
+    document.getElementById("videoUpload").addEventListener("change", function(event) {
+      const videoFile = event.target.files[0];
+      if (videoFile) {
+        const videoURL = URL.createObjectURL(videoFile);
+        const videoPreview = document.getElementById("videoPreview");
+        videoPreview.src = videoURL;
+        videoPreview.style.display = "block";
+      }
+    });
+
+    // Handle photo capture
+    document.getElementById("photoCapture").addEventListener("change", function(event) {
+      const photoFile = event.target.files[0];
+      if (photoFile) {
+        const photoURL = URL.createObjectURL(photoFile);
+        const photoPreview = document.getElementById("photoPreview");
+        photoPreview.src = photoURL;
+        photoPreview.style.display = "block";
+      }
+    });
+  </script>
+</body>
+</html>
