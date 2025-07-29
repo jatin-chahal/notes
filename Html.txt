@@ -1,0 +1,353 @@
+
+---
+
+✅ PART 1: HTML (Structure)
+
+📌 1.1 Common HTML Tags (With Opening & Closing)
+
+Tag	Description	Self-Closing
+
+<html>	Root element	❌      
+<head>	Metadata container	❌      
+<title>	Page title	❌      
+<meta>	Metadata (charset, viewport)	✅      
+<link>	External CSS link	✅      
+<style>	Internal CSS	❌      
+<script>	JavaScript (inline or external)	❌      
+<body>	Webpage body	❌      
+<header>	Top section	❌      
+<nav>	Navigation menu	❌      
+<main>	Main content area	❌      
+<section>	Thematic grouping	❌      
+<article>	Self-contained content	❌      
+<aside>	Sidebar	❌      
+<footer>	Bottom section	❌      
+<h1> to <h6>	Headings	❌      
+<p>	Paragraph	❌      
+<a>	Hyperlink	❌      
+<img>	Image	✅      
+<ul>, <ol>, <li>	Lists	❌      
+<table>, <tr>, <td>, <th>	Tables	❌      
+<input>	Form input	✅      
+<form>	HTML Form	❌      
+<button>	Button	❌      
+<label>	Label for input	❌      
+<textarea>	Multi-line input	❌      
+<select>, <option>	Dropdown	❌      
+<iframe>	Embed external page/video	❌      
+<br>	Line break	✅      
+<hr>	Horizontal line	✅      
+---  📌 1.2 Common HTML Attributes  Attribute	Usage Example	Notes
+
+id	<div id="main">	Unique identifier
+class	<p class="text">	CSS selector group
+style	<h1 style="color:red;">	Inline CSS
+src	<img src="img.png">	For images, scripts
+href	<a href="url">	Hyperlinks
+alt	<img alt="desc">	Image description
+title	<div title="tooltip">	Tooltip text
+value	<input value="data">	Input default
+type	<input type="text">	Input type (text, email)
+placeholder	<input placeholder="Enter...">	Grey hint text
+disabled	<input disabled>	Makes input inactive
+checked	<input checked>	Checkbox default
+required	<input required>	Must fill before submit
+target	<a target="_blank">	Open in new tab
+rel	<link rel="stylesheet">	Link relationship
+
+
+---
+
+🎨 PART 2: CSS (Styling)
+
+📌 2.1 CSS Syntax
+
+selector {
+property: value;
+}
+
+📌 2.2 Common Selectors
+
+Selector	Meaning
+
+Universal
+div	Element
+.className	Class
+#idName	ID
+div p	Descendant
+div > p	Direct child
+div + p	Next sibling
+
+📌 2.3 Most Used Properties
+
+Text & Font
+
+color, font-size, font-family, text-align, text-decoration
+
+Box Model
+
+width, height, padding, margin, border, box-sizing
+
+Background
+
+background-color, background-image
+
+Layout
+
+display: flex | grid | block | inline
+
+position: static | relative | absolute | fixed
+
+top, left, right, bottom, z-index
+
+Others
+
+opacity, visibility, overflow, transition, transform
+
+📌 2.4 Pseudo-Classes & Pseudo-Elements
+
+a:hover      /* Mouse over /
+input:focus  / Input focused */
+p::first-letter { font-size: 2em; }
+
+📌 2.5 Media Queries (Responsive Design)
+
+@media screen and (max-width: 768px) {
+body { font-size: 14px; }
+}
+
+
+---
+
+⚙️ PART 3: JavaScript (Interactivity)
+
+📌 3.1 Basic Syntax
+
+let name = "John";
+function greet() {
+alert("Hello " + name);
+}
+greet();
+
+📌 3.2 Data Types
+
+String, Number, Boolean, Array, Object, null, undefined
+
+📌 3.3 DOM Manipulation
+
+document.getElementById("myId").innerText = "Changed";
+document.querySelector(".myClass").style.color = "red";
+
+📌 3.4 Events
+
+document.getElementById("btn").addEventListener("click", function() {
+alert("Clicked!");
+});
+
+📌 3.5 Common Functions
+
+alert(), console.log(), prompt()
+
+setTimeout(), setInterval()
+
+📌 3.6 Control Structures
+
+if (condition) { ... }
+for (let i=0; i<10; i++) { ... }
+while (true) { ... }
+
+
+---
+
+🛠️ PART 4: Professional Project Structure
+
+📂 Folder Structure
+
+/project
+├── index.html
+├── /css
+│    └── style.css
+├── /js
+│    └── script.js
+├── /images
+│    └── logo.png
+
+
+---
+
+✅ PART 5: Best Practices
+
+Use semantic HTML (<section>, <article>, etc.)
+
+Use alt for all images
+
+Use external CSS and JS files
+
+Validate your HTML & CSS
+
+Mobile-first design (media queries)
+
+Minify CSS/JS in production
+
+Keep JavaScript in bottom of body or use defer
+
+Use responsive units (em, %, vh)
+
+
+---
+
+📦 BONUS: Tools Used in Pro Websites
+
+VS Code – Coding editor
+
+Live Server – Real-time preview
+
+Chrome DevTools – Debug & inspect
+
+Bootstrap / Tailwind CSS – Frameworks
+
+GSAP / AOS / ScrollReveal – Animation libraries
+
+Lighthouse – Performance testing
+
+
+---
+
+Sheet for HTML, CSS, and JavaScript — everything used in professional websites.
+
+
+---
+
+🌟 Web Development Cheat Sheet
+
+📄 HTML + 🎨 CSS + ⚙️ JavaScript (Professional Website Use)
+
+
+---
+
+📄 HTML Cheat Sheet (Structure & Content)
+
+✅ Basic Page Structure
+
+<!DOCTYPE html>  <html>    <head>        <title>Page Title</title>      
+  <link rel="stylesheet" href="style.css">      
+</head>      
+<body>      
+  <!-- Page content -->      
+  <script src="script.js"></script>      
+</body>      
+</html>  ✅ Common Tags  Tag	Purpose  <h1>–<h6>	Headings      
+<p>	Paragraph      
+<a href="">	Hyperlink      
+<img src="">	Image      
+<ul><li>	Unordered List      
+<ol><li>	Ordered List      
+<table><tr><td>	Table      
+<form>	Form container      
+<input>	Text, checkbox, etc.      
+<button>	Clickable button      
+<div>	Block container      
+<span>	Inline container      
+<header>, <footer>, <nav>, <main>	Layout  ✅ Important Attributes  Attribute	Purpose  id, class	CSS/JS targeting
+src, href	Image/link paths
+alt	Image description
+type	Input types (text, email)
+placeholder	Input hint text
+value	Default value
+required	Form validation
+target="_blank"	Open link in new tab
+
+
+---
+
+🎨 CSS Cheat Sheet (Styling & Layout)
+
+✅ Syntax
+
+selector {
+property: value;
+}
+
+✅ Selectors
+
+Selector	Targets
+
+All elements
+#id	Specific ID
+.class	All with class
+div p	All <p> in <div>
+a:hover	Mouse hover on link
+
+✅ Common Properties
+
+Category	Properties
+
+Text	color, font-size, text-align
+Box Model	margin, padding, border, width
+Layout	display: flex, grid, position, z-index
+Background	background-color, background-image
+Effects	transition, transform, opacity
+
+✅ Display Options
+
+display: block | inline | flex | grid | none;
+position: static | relative | absolute | fixed;
+
+✅ Responsive Design
+
+@media (max-width: 768px) {
+body { font-size: 14px; }
+}
+
+
+---
+
+⚙️ JavaScript Cheat Sheet (Logic & Interactivity)
+
+✅ Variables & Data Types
+
+let name = "John";
+const age = 25;
+var active = true;
+
+✅ Functions
+
+function greet() {
+alert("Hello!");
+}
+
+✅ DOM Manipulation
+
+document.getElementById("id").innerText = "New text";
+document.querySelector(".class").style.color = "red";
+
+✅ Events
+
+document.getElementById("btn").addEventListener("click", function() {
+alert("Clicked!");
+});
+
+✅ Conditionals & Loops
+
+if (age > 18) { ... }
+for (let i = 0; i < 5; i++) { ... }
+
+✅ Console & Alerts
+
+console.log("Debug");
+alert("Hello");
+
+
+---
+
+🛠️ Pro Project Structure
+
+/project
+├── index.html
+├── /css
+│    └── style.css
+├── /js
+│    └── script.js
+├── /images
+│    └── logo.png
+---
